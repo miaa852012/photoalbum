@@ -11,8 +11,9 @@
       min-height: 100vh;
       display: flex;
       align-items: center;
-      font-family: 'Segoe UI', Arisll, sans-serif;
-      margin:0;
+      justify-content: center;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
     }
     .container {
       background: #232323;
@@ -30,7 +31,7 @@
       font-weight: 600;
       letter-spacing: 1px;
     }
-    input[type="password"]:focus {
+    input[type="password"] {
       padding: 0.8rem;
       font-size: 1rem;
       background: #2c2c2c;
@@ -56,7 +57,7 @@
       margin-bottom: 0.7rem;
       transition: background 0.2s;
     }
-      button:hover {
+    button:hover {
       background: #555;
     }
     .error {
@@ -86,7 +87,7 @@
       if (passwordInput.value === PASSWORD) {
         window.location.href = "/main";
       } else {
-        errorMSG.textContent = "Incorrect password. Try again";
+        errorMsg.textContent = "Incorrect password. Try again!";
         passwordInput.value = "";
         passwordInput.focus();
       }
