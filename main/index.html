@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Photo Album</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #181818;
+      overflow-x: hidden;
+    }
+    .flag-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+    .flag-trans { position: absolute; width: 130vw; height: 22vh; left: -15vw; top: 6vh; transform: rotate(-7deg); background: linear-gradient(to bottom, #5BCEFA 33%, #F5A9B8 33% 66%, #fff 66% 85%, #F5A9B8 85% 95%, #5BCEFA 95%); opacity: 0.7; border-radius: 40px; }
+    .flag-pan { position: absolute; width: 120vw; height: 18vh; left: -10vw; top: 32vh; transform: rotate(6deg); background: linear-gradient(to bottom, #FF218C 33%, #FFD800 33% 66%, #21B1FF 66%); opacity: 0.6; border-radius: 40px; }
+    .flag-lesbian { position: absolute; width: 140vw; height: 20vh; left: -20vw; top: 55vh; transform: rotate(-5deg); background: linear-gradient(to bottom, #D52D00 14%, #FF9A56 14% 28%, #FFFFFF 28% 42%, #D362A4 42% 57%, #A30262 57%); opacity: 0.6; border-radius: 40px; }
+    .album-container { position: relative; z-index: 2; padding-top: 40px; padding-bottom: 40px; max-width: 900px; margin: auto; }
+    h1 { text-align: center; font-size: 2.2rem; margin-bottom: 32px; color: #fff; font-weight: 700; letter-spacing: 1.5px; text-shadow: 0 2px 8px #333; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 25px; padding: 0 24px; }
+    .photo { background: rgba(255,255,255,0.08); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.24); transition: transform 0.18s; position: relative; min-height: 160px; }
+    .photo:hover { transform: scale(1.04); }
+    .photo img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 16px; transition: filter 0.2s; filter: brightness(0.96) contrast(1.1); }
+    .photo img:hover { filter: brightness(1.04) contrast(1.08) saturate(1.2); }
+    @media (max-width: 500px) {
+      .album-container { padding-top: 24px; padding-bottom: 24px; }
+      h1 { font-size: 1.4rem; margin-bottom: 18px; }
+      .grid { gap: 14px; padding: 0 8px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Pride Flags Background -->
+  <div class="flag-bg">
+    <div class="flag-trans"></div>
+    <div class="flag-pan"></div>
+    <div class="flag-lesbian"></div>
+  </div>
+  <div class="album-container">
+    <h1>My Cute Photo Album 🩷</h1>
+    <div class="grid" id="photo-grid"></div>
+    <p style="color: #ccc; text-align: center; margin-top: 2em;">
+      Add new images to <strong>photos/</strong> and <strong>photos/index.json</strong> to update your album!
+    </p>
+  </div>
+  <script>
+    // Change this if your folder is not "photos"
+    const PHOTOS_FOLDER = "photos";
+    // Load the image list from JSON manifest
+    fetch(PHOTOS_FOLDER + "/index.json")
+      .then(r => r.json())
+      .then(list => {
+        const grid = document.getElementById('photo-grid');
+        list.forEach(filename => {
+          const div = document.createElement('div');
+          div.className = "photo";
+          const img = document.createElement('img');
+          img.src = `${PHOTOS_FOLDER}/${filename}`;
+          img.alt = "Album photo";
+          div.appendChild(img);
+          grid.appendChild(div);
+        });
+      })
+      .catch(e => {
+        document.getElementById('photo-grid').innerHTML = "<p style='color:#fff;text-align:center;'>No <code>photos/index.json</code> found!</p>";
+      });
+  </script>
+</body>
+</html>
