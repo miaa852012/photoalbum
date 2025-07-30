@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Password Screen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      background: #181818;
+      color: #f2f2f2;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      font-family: 'Segoe UI', Arisll, sans-serif;
+      margin:0;
+    }
+    .container {
+      background: #232323;
+      padding: 2.5rem 2rem;
+      border-radius: 14px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.7);
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1.6rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    input[type="password"]:focus {
+      padding: 0.8rem;
+      font-size: 1rem;
+      background: #2c2c2c;
+      color: #f2f2f2;
+      border: none;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      outline: none;
+      transition: background 0.2s;
+    }
+    input[type="password"]:focus {
+      background: #333;
+    }
+    button {
+      padding: 0.8rem;
+      background: #444;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      margin-bottom: 0.7rem;
+      transition: background 0.2s;
+    }
+      button:hover {
+      background: #555;
+    }
+    .error {
+      color: #ff6b81;
+      text-align: center;
+      font-size: 0.98rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <form id="passwordForm">
+      <h2>Enter Password</h2>
+      <input type="password" id="passwordInput" placeholder="Password" autocomplete="current-password" autofocus required />
+      <button type="submit">Submit</button>
+      <div id="errorMsg" class="error"></div>
+    </form>
+  </div>
+  <script>
+    const form = document.getElementById('passwordForm');
+    const passwordInput = document.getElementById('passwordInput');
+    const errorMsg = document.getElementById('errorMsg');
+    const PASSWORD = "MiaAndGiuli";
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (passwordInput.value === PASSWORD) {
+        window.location.href = "/main";
+      } else {
+        errorMSG.textContent = "Incorrect password. Try again";
+        passwordInput.value = "";
+        passwordInput.focus();
+      }
+    });
+
+    passwordInput.addEventListener('input', function() {
+      errorMsg.textContent = "";
+    });
+  </script>
+</body>
+</html>
