@@ -1,77 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Photo Album</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    /* Background flags - tilted */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #111;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
+      background:
+        linear-gradient(45deg, #55CDFC 33%, transparent 33.33%, transparent 66.66%, #F7A8B8 66.66%),
+        linear-gradient(-45deg, #FF75A0 33%, transparent 33.33%, transparent 66.66%, #FFD75F 66.66%),
+        linear-gradient(15deg, #D60270 33%, transparent 33.33%, transparent 66.66%, #0038A8 66.66%);
+      background-repeat: no-repeat;
+      background-size: 200% 200%;
+      background-position: center;
+      background-blend-mode: screen;
       min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       padding: 20px;
+      color: #fff;
     }
-    #status {
-      margin-bottom: 20px;
-      font-weight: bold;
-      color: #ff8080;
-    }
+
+    /* Grid container */
     #gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 15px;
-      width: 100%;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+      width: 90%;
       max-width: 1200px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
     }
+
+    /* Photos */
     #gallery img {
       width: 100%;
       height: auto;
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      transition: transform 0.2s ease;
+      transition: transform 0.3s ease;
+      cursor: pointer;
     }
-    #gallery img:hover {
-      transform: scale(1.05);
-    }
-  </style>
-</head>
-<body>
-  <div id="status">Loading photos...</div>
-  <div id="gallery"></div>
 
-  <script>
-    fetch("index.json")
-      .then(response => {
-        if (!response.ok) {
-          document.getElementById("status").innerText = "Failed to load index.json (HTTP " + response.status + ")";
-          throw new Error("HTTP " + response.status);
-        }
-        return response.json();
-      })
-      .then(photos => {
-        if (!Array.isArray(photos)) {
-          document.getElementById("status").innerText = "index.json is not a valid list";
-          return;
-        }
-        document.getElementById("status").innerText = "Photos loaded: " + photos.length;
-        const gallery = document.getElementById("gallery");
-        gallery.innerHTML = "";
-        photos.forEach(photo => {
-          const img = document.createElement("img");
-          img.src = "photos/" + photo;
-          img.alt = photo;
-          gallery.appendChild(img);
-        });
-      })
-      .catch(err => {
-        document.getElementById("status").innerText = "Error: " + err.message;
-      });
-  </script>
-</body>
-</html>
+    #gallery img:hover {
+      transform: scale(1.08);
+      b
