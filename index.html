@@ -85,7 +85,7 @@
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       if (passwordInput.value === PASSWORD) {
-        window.location.href = "/main";
+        window.location.href = "/photoalbum/main";
       } else {
         errorMsg.textContent = "Incorrect password. Try again!";
         passwordInput.value = "";
