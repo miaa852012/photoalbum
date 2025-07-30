@@ -38,7 +38,7 @@
     <div class="flag-lesbian"></div>
   </div>
   <div class="album-container">
-    <h1>My Cute Photo Album 🩷</h1>
+    <h1>My Photo Album</h1>
     <div class="grid" id="photo-grid"></div>
     <p style="color: #ccc; text-align: center; margin-top: 2em;">
       Add new images to <strong>photos/</strong> and <strong>photos/index.json</strong> to update your album!
@@ -48,7 +48,7 @@
     // Change this if your folder is not "photos"
     const PHOTOS_FOLDER = "photos";
     // Load the image list from JSON manifest
-    fetch(PHOTOS_FOLDER + "/index.json")
+    fetch(PHOTOS_FOLDER + "/readme.txt")
       .then(r => r.json())
       .then(list => {
         const grid = document.getElementById('photo-grid');
