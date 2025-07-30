@@ -8,41 +8,32 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(
-        45deg,
-        #5BCEFA 0%,
-        #F5A9B8 33%,
-        #FFFFFF 66%,
-        #F5A9B8 100%
-      ), linear-gradient(
-        -45deg,
-        #FF218C 0%,
-        #FFD800 50%,
-        #21B1FF 100%
-      ), linear-gradient(
-        15deg,
-        #D60270 0%,
-        #9B4F96 50%,
-        #0038A8 100%
-      );
-      background-blend-mode: screen;
+      background: #111;
+      color: white;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: flex-start;
       align-items: center;
       min-height: 100vh;
+      padding: 20px;
+    }
+    #status {
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #ff8080;
     }
     #gallery {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 15px;
-      width: 90%;
+      width: 100%;
       max-width: 1200px;
     }
     #gallery img {
       width: 100%;
       height: auto;
       border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       transition: transform 0.2s ease;
     }
     #gallery img:hover {
@@ -51,16 +42,26 @@
   </style>
 </head>
 <body>
+  <div id="status">Loading photos...</div>
   <div id="gallery"></div>
 
   <script>
     fetch("index.json")
       .then(response => {
-        if (!response.ok) throw new Error("HTTP " + response.status);
+        if (!response.ok) {
+          document.getElementById("status").innerText = "Failed to load index.json (HTTP " + response.status + ")";
+          throw new Error("HTTP " + response.status);
+        }
         return response.json();
       })
       .then(photos => {
+        if (!Array.isArray(photos)) {
+          document.getElementById("status").innerText = "index.json is not a valid list";
+          return;
+        }
+        document.getElementById("status").innerText = "Photos loaded: " + photos.length;
         const gallery = document.getElementById("gallery");
+        gallery.innerHTML = "";
         photos.forEach(photo => {
           const img = document.createElement("img");
           img.src = "photos/" + photo;
@@ -68,155 +69,9 @@
           gallery.appendChild(img);
         });
       })
-      .catch(err => console.error("Error loading index.json:", err));
-  </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Photo Album</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(
-        45deg,
-        #5BCEFA 0%,
-        #F5A9B8 33%,
-        #FFFFFF 66%,
-        #F5A9B8 100%
-      ), linear-gradient(
-        -45deg,
-        #FF218C 0%,
-        #FFD800 50%,
-        #21B1FF 100%
-      ), linear-gradient(
-        15deg,
-        #D60270 0%,
-        #9B4F96 50%,
-        #0038A8 100%
-      );
-      background-blend-mode: screen;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    #gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 15px;
-      width: 90%;
-      max-width: 1200px;
-    }
-    #gallery img {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: transform 0.2s ease;
-    }
-    #gallery img:hover {
-      transform: scale(1.05);
-    }
-  </style>
-</head>
-<body>
-  <div id="gallery"></div>
-
-  <script>
-    fetch("index.json")
-      .then(response => {
-        if (!response.ok) throw new Error("HTTP " + response.status);
-        return response.json();
-      })
-      .then(photos => {
-        const gallery = document.getElementById("gallery");
-        photos.forEach(photo => {
-          const img = document.createElement("img");
-          img.src = "photos/" + photo;
-          img.alt = photo;
-          gallery.appendChild(img);
-        });
-      })
-      .catch(err => console.error("Error loading index.json:", err));
-  </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Photo Album</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(
-        45deg,
-        #5BCEFA 0%,
-        #F5A9B8 33%,
-        #FFFFFF 66%,
-        #F5A9B8 100%
-      ), linear-gradient(
-        -45deg,
-        #FF218C 0%,
-        #FFD800 50%,
-        #21B1FF 100%
-      ), linear-gradient(
-        15deg,
-        #D60270 0%,
-        #9B4F96 50%,
-        #0038A8 100%
-      );
-      background-blend-mode: screen;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    #gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 15px;
-      width: 90%;
-      max-width: 1200px;
-    }
-    #gallery img {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: transform 0.2s ease;
-    }
-    #gallery img:hover {
-      transform: scale(1.05);
-    }
-  </style>
-</head>
-<body>
-  <div id="gallery"></div>
-
-  <script>
-    fetch("index.json")
-      .then(response => {
-        if (!response.ok) throw new Error("HTTP " + response.status);
-        return response.json();
-      })
-      .then(photos => {
-        const gallery = document.getElementById("gallery");
-        photos.forEach(photo => {
-          const img = document.createElement("img");
-          img.src = "photos/" + photo;
-          img.alt = photo;
-          gallery.appendChild(img);
-        });
-      })
-      .catch(err => console.error("Error loading index.json:", err));
+      .catch(err => {
+        document.getElementById("status").innerText = "Error: " + err.message;
+      });
   </script>
 </body>
 </html>
